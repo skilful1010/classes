@@ -21,13 +21,14 @@ class Student:
         average_score = []
         for key, score in self.grades.items():
             average_score.append(sum(score)/len(score))
-        return f"Средняя оценка за домашние задания: {round(sum(average_score)/len(average_score), 1)}"
+        return round(sum(average_score)/len(average_score), 1)
 
-    def __ge__(self, other):
-        return (self.average_score() >= self.average_score())
+    def __ge__(self, student):
+        return (self.average_score() >= student.average_score())
 
     def __str__(self):
-        return (f"Имя: {self.name}\nФамилия: {self.surname}\n{self.average_score()}\n"
+        return (f"Имя: {self.name}\nФамилия: {self.surname}\n"
+                f"Средняя оценка за домашние задания: {self.average_score()}\n"
                 f"Курсы в процессе изучения: {', '.join(self.courses_in_progress)}\n"
                 f"Завершенные курсы: {', '.join(self.finished_courses)}")
 
@@ -65,10 +66,14 @@ class Lecturer(Mentor):
         average_score = []
         for key, score in self.lecturer_grades.items():
             average_score.append(sum(score)/len(score))
-        return f"Средняя оценка за лекции: {round(sum(average_score)/len(average_score), 1)}"
+        return round(sum(average_score)/len(average_score), 1)
+
+    def __ge__(self, lecturer):
+        return (self.average_score() >= lecturer.average_score())
 
     def __str__(self):
-        return f"Имя: {self.name}\nФамилия: {self.surname}\n{self.average_score()}"
+        return (f"Имя: {self.name}\nФамилия: {self.surname}\n"
+                f"Средняя оценка за лекции: {self.average_score()}")
 
 
 student_1 = Student('Emma', 'Watson', 'w')
@@ -116,4 +121,4 @@ print(student_2)
 print(student_2.grades)
 print(best_lecturer)
 print(best_lecturer.lecturer_grades)
-print(student_1 == student_2)
+print(student_1 <= student_2)
