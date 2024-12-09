@@ -1,4 +1,7 @@
 class Student:
+    students = []
+    courses = []
+
     def __init__(self, name, surname, gender):
         self.name = name
         self.surname = surname
@@ -6,6 +9,8 @@ class Student:
         self.finished_courses = []
         self.courses_in_progress = []
         self.grades = {}
+        self.courses.append(self.courses_in_progress)
+        self.students.append(f"{self.name} {self.surname}")
 
     def lecturer_rate(self, lecturer, course, grade):
         if (isinstance(lecturer, Lecturer) and course in lecturer.courses_attached
@@ -25,6 +30,9 @@ class Student:
 
     def __ge__(self, student):
         return (self.average_score() >= student.average_score())
+
+    def __eq__(self, student):
+        return (self.average_score() == student.average_score())
 
     def __str__(self):
         return (f"Имя: {self.name}\nФамилия: {self.surname}\n"
@@ -71,9 +79,20 @@ class Lecturer(Mentor):
     def __ge__(self, lecturer):
         return (self.average_score() >= lecturer.average_score())
 
+    def __eq__(self, lecturer):
+        return (self.average_score() == lecturer.average_score())
+
     def __str__(self):
         return (f"Имя: {self.name}\nФамилия: {self.surname}\n"
                 f"Средняя оценка за лекции: {self.average_score()}")
+
+
+def studens_average(students, courses):
+    result = {}
+    for curs in courses:
+        for student in students:
+            result[curs] += Student.average_score()
+    return result
 
 
 student_1 = Student('Emma', 'Watson', 'w')
@@ -98,7 +117,7 @@ best_reviewer.rate_hw(student_1, 'Python', 5)
 best_reviewer.rate_hw(student_1, 'Python', 10)
 best_reviewer.rate_hw(student_1, 'Git', 10)
 best_reviewer.rate_hw(student_1, 'Git', 5)
-best_reviewer.rate_hw(student_1, 'Git', 5)
+best_reviewer.rate_hw(student_1, 'Git', 10)
 
 best_reviewer.rate_hw(student_2, 'Python', 10)
 best_reviewer.rate_hw(student_2, 'Python', 5)
@@ -114,6 +133,7 @@ student_1.lecturer_rate(best_lecturer, "Git", 10)
 student_1.lecturer_rate(best_lecturer, "Git", 9)
 student_1.lecturer_rate(best_lecturer, "Git", 10)
 
+
 print(best_reviewer)
 print(student_1)
 print(student_1.grades)
@@ -121,4 +141,7 @@ print(student_2)
 print(student_2.grades)
 print(best_lecturer)
 print(best_lecturer.lecturer_grades)
-print(student_1 <= student_2)
+print(student_1 >= student_2)
+print(Student.students)
+print(Student.courses)
+print(Student.students, Student.courses)
