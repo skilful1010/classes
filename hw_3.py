@@ -24,7 +24,7 @@ class Student:
         return round(sum(average_score)/len(average_score), 1)
 
     def __ge__(self, student):
-        return (self.average_score() >= student.average_score())
+        return (self.average_score() >= student.average_mark())
 
     def __str__(self):
         return (f"Имя: {self.name}\nФамилия: {self.surname}\n"
@@ -69,7 +69,7 @@ class Lecturer(Mentor):
         return round(sum(average_score)/len(average_score), 1)
 
     def __ge__(self, lecturer):
-        return (self.average_score() >= lecturer.average_score())
+        return (self.average_score() >= lecturer.average_mark())
 
     def __str__(self):
         return (f"Имя: {self.name}\nФамилия: {self.surname}\n"
